@@ -87,7 +87,7 @@ public class ParqueaderoTest {
 	}
 
 	@Test
-	public void añadirVehiculoAutoTest() {
+	public void aniadirVehiculoAutoTest() {
 		// Arrange
 		ParqueaderoServiceImpl parqueadero = new ParqueaderoServiceImpl();
 
@@ -102,7 +102,7 @@ public class ParqueaderoTest {
 	}
 
 	@Test
-	public void añadirVehiculoMotoTest() {
+	public void aniadirVehiculoMotoTest() {
 		// Arrange
 		ParqueaderoServiceImpl parqueadero = new ParqueaderoServiceImpl();
 

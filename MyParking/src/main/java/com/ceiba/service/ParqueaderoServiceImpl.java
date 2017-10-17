@@ -3,7 +3,6 @@
  */
 package com.ceiba.service;
 
-import static org.hamcrest.CoreMatchers.instanceOf;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -191,7 +190,7 @@ public class ParqueaderoServiceImpl implements ParqueaderoService {
 	}
 
 	/**
-	 * Compara el cupo con el tamaño actual de la lista para definir si hay cupo
+	 * Compara el cupo con el tamanio actual de la lista para definir si hay cupo
 	 * para Moto
 	 * 
 	 * @return
@@ -207,7 +206,7 @@ public class ParqueaderoServiceImpl implements ParqueaderoService {
 	}
 
 	/**
-	 * Compara el cupo con el tamaño actual de la lista para definir si hay cupo
+	 * Compara el cupo con el tamanio actual de la lista para definir si hay cupo
 	 * para Carro
 	 * 
 	 * @return
@@ -266,16 +265,17 @@ public class ParqueaderoServiceImpl implements ParqueaderoService {
 	 */
 	@Override
 	public float cobrar(Vehiculo vehiculo) {
-		float valorTotal = 0;
-		if(vehiculo instanceof Automovil) {
-			Automovil automovil = new Automovil();
-			valorTotal = automovil.cobrar(vehiculo);
-		}else {
-			Moto moto = new Moto();
-			valorTotal = moto.cobrar(vehiculo);
-		}
-	
-		return valorTotal;
+//		float valorTotal = 0;
+//		if(vehiculo instanceof Automovil) {
+//			Automovil automovil = new Automovil();
+//			valorTotal = automovil.cobrar(vehiculo);
+//		}else {
+//			Moto moto = new Moto();
+//			valorTotal = moto.cobrar(vehiculo);
+//		}
+//	
+//		return valorTotal;
+		return 0;
 	}
 	
 	@Override
