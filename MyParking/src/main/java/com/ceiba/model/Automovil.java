@@ -3,8 +3,6 @@
  */
 package com.ceiba.model;
 
-import static org.mockito.Matchers.intThat;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ceiba.entity.Registro;
