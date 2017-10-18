@@ -32,9 +32,6 @@ public class ParqueaderoDaoImp implements ParqueaderoDao {
 	// public void ingresarVehiculo(String placa, Integer cilindraje, Date
 	// fechahoraingreso, String tipo) {
 	public void ingresarVehiculo(String placa, Integer cilindraje, String tipo) {
-//		String sql = "INSERT INTO registro(placa,cilindraje,tipo) VALUES ('" + placa + "'," + cilindraje + ",'" + tipo
-//				+ "')";
-//		jdbcTemplate.execute(sql);
 		String sql = "INSERT INTO registro(placa,cilindraje,tipo) VALUES (?, ?, ?)";
 	    this.jdbcTemplate.update(sql,
 	    		placa,
