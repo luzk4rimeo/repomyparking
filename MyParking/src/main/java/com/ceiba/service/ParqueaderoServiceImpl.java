@@ -30,7 +30,7 @@ public class ParqueaderoServiceImpl implements ParqueaderoService {
 	private List<Moto> listMoto = new ArrayList<>();
 	private Integer cupoCarro = 20;
 	private Integer cupoMoto = 10;
-	private final String letraPlaca = "A";
+	private static final String letraPlaca = "A";
 
 	@Autowired
 	ParqueaderoDao parqueaderoDao;
