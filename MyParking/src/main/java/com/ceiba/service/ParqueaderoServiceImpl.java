@@ -3,7 +3,6 @@
  */
 package com.ceiba.service;
 
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -35,7 +34,7 @@ public class ParqueaderoServiceImpl implements ParqueaderoService {
 	private Integer horaCarro = 1000;
 	private Integer horaMoto = 100;
 	private final String letraPlaca = "A";
-	
+
 	@Autowired
 	ParqueaderoDao parqueaderoDao;
 
@@ -98,7 +97,7 @@ public class ParqueaderoServiceImpl implements ParqueaderoService {
 	public void setCupoMoto(Integer cupoMoto) {
 		this.cupoMoto = cupoMoto;
 	}
-	
+
 	/**
 	 * @return the diaCarro
 	 */
@@ -107,7 +106,8 @@ public class ParqueaderoServiceImpl implements ParqueaderoService {
 	}
 
 	/**
-	 * @param diaCarro the diaCarro to set
+	 * @param diaCarro
+	 *            the diaCarro to set
 	 */
 	public void setDiaCarro(Integer diaCarro) {
 		this.diaCarro = diaCarro;
@@ -121,7 +121,8 @@ public class ParqueaderoServiceImpl implements ParqueaderoService {
 	}
 
 	/**
-	 * @param diaMoto the diaMoto to set
+	 * @param diaMoto
+	 *            the diaMoto to set
 	 */
 	public void setDiaMoto(Integer diaMoto) {
 		this.diaMoto = diaMoto;
@@ -135,7 +136,8 @@ public class ParqueaderoServiceImpl implements ParqueaderoService {
 	}
 
 	/**
-	 * @param horaCarro the horaCarro to set
+	 * @param horaCarro
+	 *            the horaCarro to set
 	 */
 	public void setHoraCarro(Integer horaCarro) {
 		this.horaCarro = horaCarro;
@@ -149,28 +151,30 @@ public class ParqueaderoServiceImpl implements ParqueaderoService {
 	}
 
 	/**
-	 * @param horaMoto the horaMoto to set
+	 * @param horaMoto
+	 *            the horaMoto to set
 	 */
 	public void setHoraMoto(Integer horaMoto) {
 		this.horaMoto = horaMoto;
 	}
 
-	
 	@Override
 	public boolean aniadirAutomovil(Automovil automovil) {
 		// Valida la placa del vehiculo
 		if (validarPlaca(automovil.getPlaca())) {
-				// Valida cupo disponible Automovil
-				if (validarCupoCarro()) {										
-					insertarRegistro(automovil.getPlaca(), automovil.getCilindraje(), "A");
-					return true;
-				}
+			System.out.println("entra, ya valido placa");
+			// Valida cupo disponible Automovil
+			if (validarCupoCarro()) {
+				insertarRegistro(automovil.getPlaca(), automovil.getCilindraje(), "A");
+				return true;
+			}
 		}
 		return false;
 	}
 
 	/**
 	 * Permite agregar una moto especificamente a la lista del parqueadero
+	 * 
 	 * @param moto
 	 * @return
 	 */
@@ -184,7 +188,7 @@ public class ParqueaderoServiceImpl implements ParqueaderoService {
 		}
 		return false;
 	}
-	
+
 	public boolean retirarVehiculo(Vehiculo vehiculo) {
 		return true;
 	}
@@ -198,7 +202,7 @@ public class ParqueaderoServiceImpl implements ParqueaderoService {
 	@Override
 	public boolean validarCupoMoto() {
 		int ocupados = getCantidadVehiculoByTipo("M");
-		if ((cupoMoto - ocupados) > 0) {
+		if ((this.cupoMoto - ocupados) > 0) {
 			return true;
 		}
 
@@ -214,11 +218,12 @@ public class ParqueaderoServiceImpl implements ParqueaderoService {
 	@Override
 	public boolean validarCupoCarro() {
 		int ocupados = getCantidadVehiculoByTipo("A");
-		if ((cupoCarro - ocupados) > 0) {
-			return true;
+		if (ocupados != 0) {
+			if ((this.cupoCarro - ocupados) > 0) {
+				return true;
+			}
 		}
-
-		return false;
+		return true;
 	}
 
 	/**
@@ -265,45 +270,49 @@ public class ParqueaderoServiceImpl implements ParqueaderoService {
 	 */
 	@Override
 	public float cobrar(Vehiculo vehiculo) {
-//		float valorTotal = 0;
-//		if(vehiculo instanceof Automovil) {
-//			Automovil automovil = new Automovil();
-//			valorTotal = automovil.cobrar(vehiculo);
-//		}else {
-//			Moto moto = new Moto();
-//			valorTotal = moto.cobrar(vehiculo);
-//		}
-//	
-//		return valorTotal;
-		return 0;
+		float valorTotal = 0;
+		if (vehiculo instanceof Automovil) {
+			Automovil automovil = new Automovil();
+			valorTotal = automovil.cobrar(vehiculo);
+		} else {
+			Moto moto = new Moto();
+			valorTotal = moto.cobrar(vehiculo);
+		}
+
+		return valorTotal;
+		// return 0;
 	}
-	
+
 	@Override
 	public void crearTabla() {
+		
 		parqueaderoDao.crearTablaInicial();
+		System.out.println("esta creando tabla");
 	}
-	
+
 	@Override
-//	public void insertarRegistro(String placa, Integer cilindraje, Date fechahoraingreso, String tipo) {
-//		parqueaderoDao.ingresarVehiculo(placa, cilindraje, fechahoraingreso, tipo);
-//	}
-	public void insertarRegistro(String placa, Integer cilindraje,  String tipo) {
+	// public void insertarRegistro(String placa, Integer cilindraje, Date
+	// fechahoraingreso, String tipo) {
+	// parqueaderoDao.ingresarVehiculo(placa, cilindraje, fechahoraingreso, tipo);
+	// }
+	public void insertarRegistro(String placa, Integer cilindraje, String tipo) {
 		parqueaderoDao.ingresarVehiculo(placa, cilindraje, tipo);
 	}
-	
+
 	@Override
 	public void eliminarRegistro(String placa) {
 		parqueaderoDao.eliminarVehiculo(placa);
 	}
-	
+
 	@Override
 	public int getCantidadVehiculoByTipo(String tipo) {
+		
 		return parqueaderoDao.getCantidadByTipo(tipo);
 	}
-	
+
 	@Override
-	public Registro buscarVehiculo(String placa) {	
+	public Registro buscarVehiculo(String placa) {
 		return parqueaderoDao.buscarVehiculo(placa);
 	}
-	
+
 }

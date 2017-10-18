@@ -74,6 +74,13 @@ public class VehiculoController {
 		return ResponseEntity.ok(registro);
 	}
 	
+//	@RequestMapping(value = "/getcantidadergistros", method = RequestMethod.GET)
+//	public ResponseEntity<?> getcantidadergistros(@RequestParam(value = "tipo", defaultValue = "A") String tipo) {
+//		int cantidad = parqueaderoService.validarCupoCarro();
+//		System.out.println("--->"+cantidad);
+//		return ResponseEntity.ok(cantidad);
+//	}
+	
 	/**
 	 * Eliminar un registro de la base de datos
 	 * @param placa
