@@ -4,7 +4,14 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.Date;
+
 import org.junit.Test;
+
+import com.ceiba.dao.ParqueaderoDao;
+import com.ceiba.entity.Registro;
 import com.ceiba.model.Automovil;
 import com.ceiba.model.Moto;
 import com.ceiba.service.ParqueaderoService;
@@ -102,15 +109,15 @@ public class ParqueaderoTest {
 	public void aniadirVehiculoMotoTest() {
 		// arrange
 		ParqueaderoServiceImpl ParqueaderoServiceImplMock = mock(ParqueaderoServiceImpl.class);
-				
+
 		Moto motoMock = mock(Moto.class);
 		when(ParqueaderoServiceImplMock.getCantidadVehiculoByTipo("M")).thenReturn(1);
-		
+
 		// Act
 		ParqueaderoServiceImplMock.aniadirMoto(motoMock);
 
 		// ASsert
-		 assertTrue(ParqueaderoServiceImplMock.getCantidadVehiculoByTipo("M") > 0);
+		assertTrue(ParqueaderoServiceImplMock.getCantidadVehiculoByTipo("M") > 0);
 
 	}
 
@@ -142,15 +149,19 @@ public class ParqueaderoTest {
 		assert (valorPorCilindraje == 0);
 	}
 
-	// @Test
-	// public void cobrarTest() {
-	// // Arrange
-	// ParqueaderoServiceImpl parqueaderoService = new ParqueaderoServiceImpl();
-	//
-	// Automovil automovil = mock(Automovil.class);
-	//
-	// parqueaderoService.cobrar(automovil);
-	//
-	// }
+	@Test
+	public void calcularTiempoTest() {
+		// Arrange
+		ParqueaderoServiceImpl parqueaderoService = new ParqueaderoServiceImpl();
+
+		// Act
+		Calendar c = Calendar.getInstance();
+		c.set(2017, 9, 18, 6, 00);
+
+		int horas = parqueaderoService.calcularTiempo(c.getTime());
+
+		// Assert
+		assertTrue(horas > 0);
+	}
 
 }

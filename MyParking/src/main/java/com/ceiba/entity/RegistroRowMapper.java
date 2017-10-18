@@ -20,6 +20,7 @@ public class RegistroRowMapper implements RowMapper<Registro> {
 		p.setPlaca(rs.getString("PLACA"));
 		p.setCilindraje(rs.getInt("CILINDRAJE"));
 		p.setTipo(rs.getString("TIPO"));
+		p.setFechahoraingreso(rs.getTimestamp("FECHAHORAINGRESO"));
 		return p;
 	}
 }

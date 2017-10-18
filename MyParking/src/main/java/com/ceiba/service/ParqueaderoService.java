@@ -4,14 +4,9 @@
 package com.ceiba.service;
 
 import java.util.Date;
-import java.util.List;
-
-import org.springframework.http.ResponseEntity;
-
 import com.ceiba.entity.Registro;
 import com.ceiba.model.Automovil;
 import com.ceiba.model.Moto;
-import com.ceiba.model.Vehiculo;
 
 /**
  * @author luz.ocampo
@@ -31,11 +26,10 @@ public interface ParqueaderoService {
 
 	float validarCilindraje(Integer cilindraje);
 
-	float cobrar(Vehiculo vehiculo);
+	float cobrar(Registro vehiculo);
 
 	void crearTabla();
 
-//	void insertarRegistro(String placa, Integer cilindraje, Date fechahoraingreso, String tipo);
 	void insertarRegistro(String placa, Integer cilindraje, String tipo);
 
 	void eliminarRegistro(String placa);
@@ -43,6 +37,8 @@ public interface ParqueaderoService {
 	int getCantidadVehiculoByTipo(String tipo);
 
 	Registro buscarVehiculo(String placa);
+
+	Integer calcularTiempo(Date fecharegistro);
 	
 	
 

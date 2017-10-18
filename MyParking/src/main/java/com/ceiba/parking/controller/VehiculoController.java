@@ -1,9 +1,6 @@
 package com.ceiba.parking.controller;
 
-import java.util.Date;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.ResponseEntity;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -12,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ceiba.dao.ParqueaderoDaoImp;
 import com.ceiba.entity.Registro;
 import com.ceiba.model.Automovil;
 import com.ceiba.model.Moto;
@@ -48,7 +44,7 @@ public class VehiculoController {
 	@RequestMapping(value = "/vehiculo/automovil", method = RequestMethod.POST)
 	public ResponseEntity<?> ingresarAutomovil(@RequestBody Automovil automovil) {
 		boolean registro = this.parqueaderoService.aniadirAutomovil(automovil);
-		return ResponseEntity.ok(registro);
+		return ResponseEntity.ok(registro); 
 	}
 
 	/**
@@ -70,16 +66,9 @@ public class VehiculoController {
 	@RequestMapping(value = "/buscarregistro", method = RequestMethod.GET)
 	public ResponseEntity<Registro> buscarregistro(@RequestParam(value = "placa", defaultValue = "placa") String placa) {
 		Registro registro = parqueaderoService.buscarVehiculo(placa);
-		System.out.println(registro.getCilindraje());
+		System.out.println(registro.getFechahoraingreso());
 		return ResponseEntity.ok(registro);
 	}
-	
-//	@RequestMapping(value = "/getcantidadergistros", method = RequestMethod.GET)
-//	public ResponseEntity<?> getcantidadergistros(@RequestParam(value = "tipo", defaultValue = "A") String tipo) {
-//		int cantidad = parqueaderoService.validarCupoCarro();
-//		System.out.println("--->"+cantidad);
-//		return ResponseEntity.ok(cantidad);
-//	}
 	
 	/**
 	 * Eliminar un registro de la base de datos

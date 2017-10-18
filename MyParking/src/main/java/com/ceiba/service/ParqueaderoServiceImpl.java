@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,10 +30,6 @@ public class ParqueaderoServiceImpl implements ParqueaderoService {
 	private List<Moto> listMoto = new ArrayList<>();
 	private Integer cupoCarro = 20;
 	private Integer cupoMoto = 10;
-	private Integer diaCarro = 8000;
-	private Integer diaMoto = 600;
-	private Integer horaCarro = 1000;
-	private Integer horaMoto = 100;
 	private final String letraPlaca = "A";
 
 	@Autowired
@@ -98,72 +95,9 @@ public class ParqueaderoServiceImpl implements ParqueaderoService {
 		this.cupoMoto = cupoMoto;
 	}
 
-	/**
-	 * @return the diaCarro
-	 */
-	public Integer getDiaCarro() {
-		return diaCarro;
-	}
-
-	/**
-	 * @param diaCarro
-	 *            the diaCarro to set
-	 */
-	public void setDiaCarro(Integer diaCarro) {
-		this.diaCarro = diaCarro;
-	}
-
-	/**
-	 * @return the diaMoto
-	 */
-	public Integer getDiaMoto() {
-		return diaMoto;
-	}
-
-	/**
-	 * @param diaMoto
-	 *            the diaMoto to set
-	 */
-	public void setDiaMoto(Integer diaMoto) {
-		this.diaMoto = diaMoto;
-	}
-
-	/**
-	 * @return the horaCarro
-	 */
-	public Integer getHoraCarro() {
-		return horaCarro;
-	}
-
-	/**
-	 * @param horaCarro
-	 *            the horaCarro to set
-	 */
-	public void setHoraCarro(Integer horaCarro) {
-		this.horaCarro = horaCarro;
-	}
-
-	/**
-	 * @return the horaMoto
-	 */
-	public Integer getHoraMoto() {
-		return horaMoto;
-	}
-
-	/**
-	 * @param horaMoto
-	 *            the horaMoto to set
-	 */
-	public void setHoraMoto(Integer horaMoto) {
-		this.horaMoto = horaMoto;
-	}
-
 	@Override
 	public boolean aniadirAutomovil(Automovil automovil) {
-		// Valida la placa del vehiculo
 		if (validarPlaca(automovil.getPlaca())) {
-			System.out.println("entra, ya valido placa");
-			// Valida cupo disponible Automovil
 			if (validarCupoCarro()) {
 				insertarRegistro(automovil.getPlaca(), automovil.getCilindraje(), "A");
 				return true;
@@ -180,9 +114,7 @@ public class ParqueaderoServiceImpl implements ParqueaderoService {
 	 */
 	@Override
 	public boolean aniadirMoto(Moto moto) {
-		// VAlida el cupo disponible Moto
 		if (validarCupoMoto()) {
-			// Agrega la moto
 			insertarRegistro(moto.getPlaca(), moto.getCilindraje(), "M");
 			return true;
 		}
@@ -269,32 +201,38 @@ public class ParqueaderoServiceImpl implements ParqueaderoService {
 	 * @return
 	 */
 	@Override
-	public float cobrar(Vehiculo vehiculo) {
-		float valorTotal = 0;
-		if (vehiculo instanceof Automovil) {
-			Automovil automovil = new Automovil();
-			valorTotal = automovil.cobrar(vehiculo);
+	public float cobrar(Registro registro) {
+		
+		if (registro.getTipo().equals("A")) {
+			Automovil auto = new Automovil();
+			return auto.cobrar(registro);
 		} else {
 			Moto moto = new Moto();
-			valorTotal = moto.cobrar(vehiculo);
+			return moto.cobrar(registro);
 		}
 
-		return valorTotal;
-		// return 0;
+	}
+
+	@Override
+	public Integer calcularTiempo(Date fecharegistro) {
+		Calendar c = Calendar.getInstance();
+
+		Calendar fechaInicio = new GregorianCalendar();
+		fechaInicio.setTime(new Date());
+
+		Calendar fechaFin = new GregorianCalendar();
+		fechaFin.setTime(fecharegistro);
+		c.setTimeInMillis(fechaInicio.getTime().getTime() - fechaFin.getTime().getTime());
+		
+		return (int) (c.getTimeInMillis() / 3600000);
 	}
 
 	@Override
 	public void crearTabla() {
-		
 		parqueaderoDao.crearTablaInicial();
-		System.out.println("esta creando tabla");
 	}
 
 	@Override
-	// public void insertarRegistro(String placa, Integer cilindraje, Date
-	// fechahoraingreso, String tipo) {
-	// parqueaderoDao.ingresarVehiculo(placa, cilindraje, fechahoraingreso, tipo);
-	// }
 	public void insertarRegistro(String placa, Integer cilindraje, String tipo) {
 		parqueaderoDao.ingresarVehiculo(placa, cilindraje, tipo);
 	}
@@ -306,7 +244,7 @@ public class ParqueaderoServiceImpl implements ParqueaderoService {
 
 	@Override
 	public int getCantidadVehiculoByTipo(String tipo) {
-		
+
 		return parqueaderoDao.getCantidadByTipo(tipo);
 	}
 

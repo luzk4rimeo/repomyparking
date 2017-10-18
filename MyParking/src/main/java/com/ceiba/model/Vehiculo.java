@@ -14,8 +14,6 @@ public class Vehiculo {
 	private String placa;
 	private Integer cilindraje;
 	
-	
-	
 	/**
 	 * @param marca
 	 * @param color

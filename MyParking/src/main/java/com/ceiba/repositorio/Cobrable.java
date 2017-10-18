@@ -1,6 +1,6 @@
 package com.ceiba.repositorio;
 
-import com.ceiba.model.Vehiculo;
+import com.ceiba.entity.Registro;
 
 public interface Cobrable{
 
@@ -9,5 +9,5 @@ public interface Cobrable{
 	 * @param vehiculo
 	 * @return
 	 */
-	public float cobrar(Vehiculo vehiculo);
+	public float cobrar(Registro vehiculo);
 }
